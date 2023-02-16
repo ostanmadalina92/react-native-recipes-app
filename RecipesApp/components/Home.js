@@ -5,9 +5,12 @@ import {
   StyleSheet,
   Image,
   Animated,
+  TouchableOpacity,
 } from "react-native";
+import Drawer from "react-native-drawer";
 import homeImage from "../assets/plant-based-food.jpeg";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const FadeInView = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -24,17 +27,46 @@ const FadeInView = (props) => {
     <Animated.View
       style={{
         ...props.style,
-        opacity: fadeAnim, 
+        opacity: fadeAnim,
       }}
     >
       {props.children}
     </Animated.View>
   );
 };
-
 export default function Home({ navigation }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <View>
+      <Drawer
+        type="overlay"
+        content={
+          <TouchableOpacity onPress={closeMenu}>
+            <Text> Content</Text>
+          </TouchableOpacity>
+        }
+        tapToClose={true}
+        openDrawerOffset={0.2}
+        panCloseMask={0.2}
+        closedDrawerOffset={-3}
+        open={isOpen}
+      >
+        <View style={styles.containerD}>
+          <TouchableOpacity onPress={toggleMenu}>
+            <Icon name={isOpen ? "times" : "bars"} size={28} color="#18771A" />
+          </TouchableOpacity>
+        </View>
+      </Drawer>
+
       <View style={styles.titleArea}>
         <Text style={styles.title}>Welcome to my cuisine!</Text>
         <Text style={styles.subtitle}>
@@ -94,5 +126,9 @@ const styles = StyleSheet.create({
     width: "80%",
     borderRadius: "4%",
     padding: "5%",
+  },
+  containerD: {
+    alignItems: "flex-end",
+    marginRight: "5%",
   },
 });
