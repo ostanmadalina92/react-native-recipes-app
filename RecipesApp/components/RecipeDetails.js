@@ -1,27 +1,57 @@
-import { Text, View, Image, StyleSheet } from "react-native";
-import { useState, useEffect } from "react";
+import { Text, View, Image, StyleSheet, Animated, Easing } from "react-native";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import HTML from "react-native-render-html";
 const API_KEY = "a6d07f2ff64744d585a354c7f28b1762";
 
 export default function RecipeDetails({ route }) {
-
   const { itemId, itemImage, itemTitle } = route.params;
   const [recipe, setRecipe] = useState({});
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        `https://api.spoonacular.com/recipes/${itemId}/information?apiKey=${API_KEY}`
+      );
+      setRecipe(response.data);
+    };
+    fetchData();
+  }, []);
+
+  const RotateInView = (props) => {
+    const rotateAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
     useEffect(() => {
-      const fetchData = async () => {
-        const response = await axios.get(
-          `https://api.spoonacular.com/recipes/${itemId}/information?apiKey=${API_KEY}`
-        );
-        setRecipe(response.data);
-      };
-      fetchData();
-    }, []);
+      Animated.timing(rotateAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+        easing: Easing.inOut(Easing.ease)
+      }).start();
+    }, [rotateAnim]);
+
+    return (
+      <Animated.View // Special animatable View
+        style={{
+          ...props.style,
+          opacity: rotateAnim, // Bind opacity to animated value
+          transform: [
+            {
+              rotate: rotateAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ["-180deg", "0deg"],
+              }),
+            },
+          ],
+        }}
+      >
+        {props.children}
+      </Animated.View>
+    );
+  };
 
   return (
     <View>
-      <Text>details</Text>
       <View style={styles.recipe}>
         <Image
           style={styles.image}
@@ -30,10 +60,11 @@ export default function RecipeDetails({ route }) {
           }}
         />
         <Text style={styles.title}>{itemTitle}</Text>
-        {/* <Text style={styles.subTitle}>{recipe.instructions}</Text> */}
-
-        <HTML source={{ html: recipe.summary }} />
-        {/* <HTML source={{ html: "<h1>Hello, world!</h1>" }} /> */}
+        <RotateInView>
+          <View style={styles.summary}>
+            <HTML source={{ html: recipe.summary }} />
+          </View>
+        </RotateInView>
       </View>
     </View>
   );
@@ -71,5 +102,10 @@ const styles = StyleSheet.create({
   },
   description: {
     marginTop: 10,
+  },
+  summary: {
+    marginTop: "4%",
+    paddingTop: "2%",
+    backgroundColor: "#e9eee4",
   },
 });
