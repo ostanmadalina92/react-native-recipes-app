@@ -48,10 +48,18 @@ export default function Home({ navigation }) {
   return (
     <View>
       <Drawer
+      style={styles.containerD}
         type="overlay"
         content={
           <TouchableOpacity onPress={closeMenu}>
-            <Text> Content</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+              <Text style={styles.drawerLinks}>Home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RecipesList")}
+            >
+              <Text style={styles.drawerLinks}>Recipes List </Text>
+            </TouchableOpacity>
           </TouchableOpacity>
         }
         tapToClose={true}
@@ -60,7 +68,7 @@ export default function Home({ navigation }) {
         closedDrawerOffset={-3}
         open={isOpen}
       >
-        <View style={styles.containerD}>
+        <View style={styles.hamburger}>
           <TouchableOpacity onPress={toggleMenu}>
             <Icon name={isOpen ? "times" : "bars"} size={28} color="#18771A" />
           </TouchableOpacity>
@@ -127,8 +135,17 @@ const styles = StyleSheet.create({
     borderRadius: "4%",
     padding: "5%",
   },
-  containerD: {
+  hamburger: {
     alignItems: "flex-end",
     marginRight: "5%",
   },
+  drawerLinks: {
+    color: "#18771A",
+    marginLeft: "5%",
+    fontWeight: "500",
+  },
+  containerD:{
+    width: "20%",
+    backgroundColor:"red",
+  }
 });
