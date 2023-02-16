@@ -21,10 +21,10 @@ const FadeInView = (props) => {
   }, [fadeAnim]);
 
   return (
-    <Animated.View // Special animatable View
+    <Animated.View
       style={{
         ...props.style,
-        opacity: fadeAnim, // Bind opacity to animated value
+        opacity: fadeAnim, 
       }}
     >
       {props.children}

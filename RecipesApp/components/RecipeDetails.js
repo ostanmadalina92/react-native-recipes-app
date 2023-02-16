@@ -2,7 +2,8 @@ import { Text, View, Image, StyleSheet, Animated, Easing } from "react-native";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import HTML from "react-native-render-html";
-const API_KEY = "a6d07f2ff64744d585a354c7f28b1762";
+
+const API_KEY = "67852d387b50474c9ee323fad9788aa6";
 
 export default function RecipeDetails({ route }) {
   const { itemId, itemImage, itemTitle } = route.params;
@@ -31,10 +32,10 @@ export default function RecipeDetails({ route }) {
     }, [rotateAnim]);
 
     return (
-      <Animated.View // Special animatable View
+      <Animated.View 
         style={{
           ...props.style,
-          opacity: rotateAnim, // Bind opacity to animated value
+          opacity: rotateAnim, 
           transform: [
             {
               rotate: rotateAnim.interpolate({

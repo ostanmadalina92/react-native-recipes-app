@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import axios from "axios";
 
-const API_KEY = "a6d07f2ff64744d585a354c7f28b1762";
+const API_KEY = "67852d387b50474c9ee323fad9788aa6";
 
 export default function RecipesList({ navigation }) {
   const [recipes, setRecipes] = useState([]);
@@ -33,23 +33,14 @@ export default function RecipesList({ navigation }) {
       Animated.timing(easeAnim, {
         toValue: 1,
         duration: 5000,
-        // easing: Easing.linear,
         easing: Easing.elastic(1.5),
       }).start();
     }, [easeAnim]);
 
     return (
-      <Animated.View // Special animatable View
+      <Animated.View 
         style={{
           ...props.style,
-          // marginLeft: easeAnim.interpolate({
-          //   inputRange: [0, 10],
-          //   outputRange: [0, 50],
-          // }),
-          // opacity: easeAnim.interpolate({
-          //   inputRange: [0, 0.5, 1],
-          //   outputRange: [0, 1, 2],
-          // }),
           transform: [{ scale: easeAnim }],
         }}
       >
