@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,10 @@ import {
   FlatList,
   StyleSheet,
   Pressable,
-  Animated,
-  Easing,
+
 } from "react-native";
 import axios from "axios";
+import EaseInView from "../animations/EaseInView";
 
 const API_KEY = "67852d387b50474c9ee323fad9788aa6";
 
@@ -25,29 +25,6 @@ export default function RecipesList({ navigation }) {
     };
     fetchData();
   }, []);
-
-  const EaseInView = (props) => {
-    const easeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
-
-    useEffect(() => {
-      Animated.timing(easeAnim, {
-        toValue: 1,
-        duration: 5000,
-        easing: Easing.elastic(1.5),
-      }).start();
-    }, [easeAnim]);
-
-    return (
-      <Animated.View 
-        style={{
-          ...props.style,
-          transform: [{ scale: easeAnim }],
-        }}
-      >
-        {props.children}
-      </Animated.View>
-    );
-  };
 
   return (
     <View style={styles.container}>

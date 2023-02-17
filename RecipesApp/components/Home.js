@@ -4,36 +4,14 @@ import {
   Pressable,
   StyleSheet,
   Image,
-  Animated,
   TouchableOpacity,
 } from "react-native";
 import Drawer from "react-native-drawer";
 import homeImage from "../assets/plant-based-food.jpeg";
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
+import FadeInView from "../animations/FadeInView";
 
-const FadeInView = (props) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
-
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 5000,
-      useNativeDriver: true,
-    }).start();
-  }, [fadeAnim]);
-
-  return (
-    <Animated.View
-      style={{
-        ...props.style,
-        opacity: fadeAnim,
-      }}
-    >
-      {props.children}
-    </Animated.View>
-  );
-};
 export default function Home({ navigation }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,7 +26,7 @@ export default function Home({ navigation }) {
   return (
     <View>
       <Drawer
-      style={styles.containerD}
+        style={styles.containerD}
         type="overlay"
         content={
           <TouchableOpacity onPress={closeMenu}>
@@ -144,8 +122,8 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     fontWeight: "500",
   },
-  containerD:{
+  containerD: {
     width: "20%",
-    backgroundColor:"red",
-  }
+    backgroundColor: "red",
+  },
 });

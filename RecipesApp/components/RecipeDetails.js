@@ -1,7 +1,8 @@
-import { Text, View, Image, StyleSheet, Animated, Easing } from "react-native";
-import { useState, useEffect, useRef } from "react";
+import { Text, View, Image, StyleSheet } from "react-native";
+import { useState, useEffect} from "react";
 import axios from "axios";
 import HTML from "react-native-render-html";
+import RotateInView from "../animations/RotateInView";
 
 const API_KEY = "67852d387b50474c9ee323fad9788aa6";
 
@@ -19,37 +20,7 @@ export default function RecipeDetails({ route }) {
     fetchData();
   }, []);
 
-  const RotateInView = (props) => {
-    const rotateAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
-    useEffect(() => {
-      Animated.timing(rotateAnim, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-        easing: Easing.inOut(Easing.ease)
-      }).start();
-    }, [rotateAnim]);
-
-    return (
-      <Animated.View 
-        style={{
-          ...props.style,
-          opacity: rotateAnim, 
-          transform: [
-            {
-              rotate: rotateAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: ["-180deg", "0deg"],
-              }),
-            },
-          ],
-        }}
-      >
-        {props.children}
-      </Animated.View>
-    );
-  };
 
   return (
     <View>
