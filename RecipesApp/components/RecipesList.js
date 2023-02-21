@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,23 +7,12 @@ import {
   Pressable,
 
 } from "react-native";
-import axios from "axios";
 import EaseInView from "../animations/EaseInView";
-
-const API_KEY = "67852d387b50474c9ee323fad9788aa6";
+import getRecipeLIstData from "../data/RecipeListData";
 
 export default function RecipesList({ navigation }) {
-  const [recipes, setRecipes] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=25`
-      );
-      setRecipes(response.data.results);
-    };
-    fetchData();
-  }, []);
+  const recipes = getRecipeLIstData();
 
   return (
     <View style={styles.container}>

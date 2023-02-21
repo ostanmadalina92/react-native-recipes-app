@@ -1,26 +1,13 @@
 import { Text, View, Image, StyleSheet } from "react-native";
-import { useState, useEffect} from "react";
-import axios from "axios";
 import HTML from "react-native-render-html";
 import RotateInView from "../animations/RotateInView";
+import getRecipeDetailsData from "../data/RecipeDetailsData";
 
-const API_KEY = "67852d387b50474c9ee323fad9788aa6";
 
 export default function RecipeDetails({ route }) {
   const { itemId, itemImage, itemTitle } = route.params;
-  const [recipe, setRecipe] = useState({});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/${itemId}/information?apiKey=${API_KEY}`
-      );
-      setRecipe(response.data);
-    };
-    fetchData();
-  }, []);
-
-
+  const recipe = getRecipeDetailsData(itemId);
 
   return (
     <View>
