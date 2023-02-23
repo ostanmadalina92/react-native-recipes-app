@@ -23,6 +23,7 @@ export default function RecipeDetails({ route }) {
           <View style={styles.summary}>
             <HTML source={{ html: recipe.summary }} />
           </View>
+          <Text>{recipe.title}</Text>
         </RotateInView>
       </View>
     </View>

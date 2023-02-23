@@ -1,22 +1,15 @@
-import { useState, useEffect} from "react";
-import axios from "axios";
-
-const API_KEY = "67852d387b50474c9ee323fad9788aa6";
+import { useEffect } from "react";
+import { useSyncExternalStore } from "react";
+import { recipeStore } from "../store/detailsStore";
 
 export default getRecipeDetailsData = (itemId) => {
+  const recipe = useSyncExternalStore(
+    recipeStore.subscribe,
+    recipeStore.getSnapshot
+  );
+  useEffect(() => {
+    recipeStore.fetchRecipes(itemId);
+  }, []);
 
-const [recipe, setRecipe] = useState({});
-
-useEffect(() => {
-  const fetchData = async () => {
-    const response = await axios.get(
-      `https://api.spoonacular.com/recipes/${itemId}/information?apiKey=${API_KEY}`
-    );
-    setRecipe(response.data);
-  };
-  fetchData();
-}, []);
-
-return recipe;
-}
-
+  return recipe;
+};
