@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { observer } from "mobx-react";
+import { recipesStore } from "../mobxStore/mRecipesStore";
 import {
   View,
   Text,
@@ -7,10 +10,13 @@ import {
   Pressable,
 } from "react-native";
 import EaseInView from "../animations/EaseInView";
-import getRecipeLIstData from "../data/RecipeListData";
 
-export default function RecipesList({ navigation }) {
-  const recipes = getRecipeLIstData();
+const MRecipesList = observer(({ navigation }) => {
+  const { recipes } = recipesStore;
+
+  useEffect(() => {
+    recipesStore.fetchRecipes();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -48,7 +54,7 @@ export default function RecipesList({ navigation }) {
       />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -95,3 +101,5 @@ const styles = StyleSheet.create({
     padding: "2%",
   },
 });
+
+export default MRecipesList;

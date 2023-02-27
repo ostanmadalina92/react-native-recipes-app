@@ -66,7 +66,7 @@ export default function Home({ navigation }) {
         <Pressable
           style={styles.recipeListBtn}
           title="Go to recipes list"
-          onPress={() => navigation.navigate("RecipesList")}
+          onPress={() => navigation.navigate("MRecipesList")}
         >
           <FadeInView>
             <Text style={styles.recipeListBtnText}>Check out my recipes!</Text>

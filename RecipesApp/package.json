@@ -17,6 +17,8 @@
     "fast-html-parser": "^1.0.1",
     "hamburger-react": "^2.5.0",
     "link": "^1.5.1",
+    "mobx": "^6.8.0",
+    "mobx-react": "^7.6.0",
     "react": "18.1.0",
     "react-detect-offline": "^2.4.5",
     "react-native": "^0.70.5",
